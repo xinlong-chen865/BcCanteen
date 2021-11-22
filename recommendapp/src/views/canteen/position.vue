@@ -45,7 +45,7 @@ export default {
            zoom: 13,
       });
       that.map.plugin("AMap.Geolocation", function() {
-        var geolocation = new AMap.Geolocation({
+        let geolocation = new AMap.Geolocation({
           enableHighAccuracy: true,
           timeout: 10000,
           maximumAge: 0,
@@ -58,6 +58,7 @@ export default {
           panToLocation: true,
           zoomToAccuracy: true,
         });
+        that.map.addControl(geolocation);
         geolocation.getCurrentPosition();
       });
     },
