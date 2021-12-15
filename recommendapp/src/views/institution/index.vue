@@ -2,13 +2,7 @@
   <div class="institution">
     <!-- 搜索框 -->
     <form action="/">
-      <van-search
-        v-model="searchData"
-        show-action
-        placeholder="请输入设施地点"
-        @search="onSearch"
-        @cancel="onCancel"
-      />
+      <van-search v-model="searchData" show-action placeholder="请输入设施地点" @search="onSearch" @cancel="onCancel" />
     </form>
     <!-- 横向滚动 -->
     <div id="scroll">
@@ -36,11 +30,7 @@
             fill="#FFE91F"
             p-id="2475"
           ></path>
-          <path
-            d="M938.033 182.974L715.79 405.216l-29.698-29.698 222.242-222.242z"
-            fill="#333333"
-            p-id="2476"
-          ></path>
+          <path d="M938.033 182.974L715.79 405.216l-29.698-29.698 222.242-222.242z" fill="#333333" p-id="2476"></path>
           <path
             d="M802.4 757.2c-12.5-12.5-60.8-54.9-122-108.7-25.1-22-51.9-45.6-78-68.7 18.6-20.3 31.4-33.7 38.3-40 16.9-15.6 49.2-16.7 80.5-17.8 34.8-1.2 70.9-2.5 92.1-25.3 32.1-34.5 160.7-199.6 166.1-206.6l-33.1-25.8C945 266.1 813.5 435 782.6 468.1c-9.4 10.1-36.6 11.1-62.9 12-37.1 1.3-79 2.8-107.4 28.9-7.8 7.2-21.4 21.4-41.3 43.1-11.7-10.4-22.9-20.4-33.6-29.9 22.8-20.8 37.5-35 44.9-43 26.1-28.4 27.5-70.4 28.9-107.4 0.9-26.3 1.9-53.5 12-62.9 33.2-30.9 202-162.4 203.7-163.7l-25.8-33.1c-7 5.5-172.1 134-206.6 166.1-22.8 21.3-24.1 57.3-25.3 92.1-1.1 31.2-2.3 63.5-17.8 80.5-6.8 7.4-22 21.9-45.3 43.2-21.5-19.6-37.8-35-45.3-43.2-14.1-15.3-14.9-29.6-15.4-57.7-0.5-28.4-1.1-63.6-23.2-108.7C379.5 197.2 244 141.6 234.9 138c-12.4-5.3-37.3-14.1-66.5-14.1-34.2 0-64.7 12.4-88.1 35.8-23.8 23.8-36.1 54.8-35.7 89.7 0.3 28.6 8.9 52.9 14.1 64.9 3.7 9.1 59.2 144.6 146.4 187.3 45.1 22.1 80.4 22.7 108.7 23.2 28.2 0.5 42.4 1.3 57.7 15.4 7.5 6.9 21 21.1 38.3 40-25.9 22.9-52.4 46.1-78.1 68.8-61.1 53.7-109.4 96.1-121.8 108.6-18.8 18.8-29.3 40.6-30.6 63.2-1.3 23.9 7.9 46.4 26.5 65.1 17.5 17.5 38.4 26.7 60.6 26.7 1.5 0 3 0 4.5-0.1 22.6-1.2 44.4-11.8 63.2-30.6 12.5-12.5 54.8-60.6 108.4-121.6 20.9-23.8 42.4-48.2 63.6-72.3 21.4 24.2 43.1 48.9 63.5 72.1 53.7 61.1 96.1 109.3 108.5 121.8 19.8 19.8 43.8 30.7 67.5 30.7 22.3 0 43.3-9.2 60.7-26.7 18.7-18.7 27.9-41.2 26.5-65.1-1.1-23-11.7-44.8-30.4-63.6zM411 732.1c-48.9 55.6-95 108.1-106.5 119.6-11.3 11.3-23.7 17.7-35.8 18.3-11.8 0.7-22.9-4.2-33.1-14.3-10.1-10.1-15-21.3-14.3-33.1 0.7-12.1 7-24.4 18.3-35.8 11.5-11.5 64.1-57.8 119.9-106.7C385.4 657.4 412 634 438 611c12.5 13.9 26 29.1 40 44.9-22.3 25.3-45 51.1-67 76.2z m365.7 123.7c-9.5 9.5-20 14.4-31 14.4-12.7 0-25.8-6.4-37.9-18.4-11.5-11.5-57.7-64.1-106.7-119.8-81.5-92.9-174-198.1-201.1-223-27.8-25.5-57.1-26-85.4-26.5-26.7-0.5-54.3-0.9-91-18.9-73.7-36.1-125.5-164.1-126-165.4-0.1-0.2-0.2-0.4-0.2-0.6-26.8-62.1 2.9-98.8 12.7-108.6 15.6-15.6 35.2-23.5 58.4-23.5 22.8 0 42.7 7.5 50.2 10.8 0.2 0.1 0.4 0.2 0.6 0.2 0.3 0.1 32.9 13.2 70 35.8 47.7 29.1 80.7 60.3 95.4 90.2 18 36.7 18.4 64.3 18.9 91 0.5 28.4 1 57.7 26.5 85.4 24.9 27.1 130 119.5 222.8 201 55.8 49 108.5 95.3 120 106.9 11.3 11.3 17.7 23.7 18.3 35.8 0.5 11.9-4.4 23-14.5 33.2z"
             fill="#333333"
@@ -60,21 +50,9 @@
           width="30"
           height="30"
         >
-          <path
-            d="M353.104 370.758h317.794v105.932H353.104z"
-            fill="#FFCF65"
-            p-id="1889"
-          ></path>
-          <path
-            d="M211.862 723.862h600.276v194.206H211.862z"
-            fill="#FF4B4B"
-            p-id="1890"
-          ></path>
-          <path
-            d="M264.828 582.62h494.344v105.932H264.828z"
-            fill="#FFCF65"
-            p-id="1891"
-          ></path>
+          <path d="M353.104 370.758h317.794v105.932H353.104z" fill="#FFCF65" p-id="1889"></path>
+          <path d="M211.862 723.862h600.276v194.206H211.862z" fill="#FF4B4B" p-id="1890"></path>
+          <path d="M264.828 582.62h494.344v105.932H264.828z" fill="#FFCF65" p-id="1891"></path>
           <path
             d="M264.828 582.62h494.344v52.966H264.828zM353.104 370.758h317.794v52.966H353.104z"
             fill="#FFB450"
@@ -110,11 +88,7 @@
             fill="#FFB450"
             p-id="1898"
           ></path>
-          <path
-            d="M476.69 353.104h70.62v88.276h-70.62z"
-            fill="#5091D7"
-            p-id="1899"
-          ></path>
+          <path d="M476.69 353.104h70.62v88.276h-70.62z" fill="#5091D7" p-id="1899"></path>
           <path
             d="M529.656 812.138h-35.31a17.658 17.658 0 0 0-17.656 17.656v88.276h70.62v-88.276a17.654 17.654 0 0 0-17.654-17.656zM370.758 812.138h-35.31a17.658 17.658 0 0 0-17.656 17.656v88.276h70.62v-88.276a17.654 17.654 0 0 0-17.654-17.656zM688.552 812.138h-35.31a17.658 17.658 0 0 0-17.656 17.656v88.276h70.62v-88.276a17.654 17.654 0 0 0-17.654-17.656z"
             fill="#504B5A"
@@ -168,101 +142,181 @@
         <div>购物服务</div>
       </van-col>
     </van-row>
+    <div ref="my_pull">
+      <data-view 
+        :nearbyList="nearbyList"
+        :type="typeList.type"
+      >
+      </data-view>
+    </div>
+    <div class="isbottom" v-if="isbottom">
+        <span>加载中，请稍后</span>
+    </div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-import MapLoader from "@/assets/js/AMap.js";
-import { Search, Col, Row, Toast } from "vant";
+import Vue from 'vue';
+import MapLoader from '@/assets/js/AMap.js';
+import DataView from './components/dataView.vue';
+import { Search, Col, Row, Toast } from 'vant';
 
 Vue.use(Col);
 Vue.use(Row);
 Vue.use(Search);
 
 export default {
-  components: {},
+  components: {
+    DataView,
+  },
   data() {
     return {
-      searchData: "",
+      // 搜索信息
+      searchData: '',
       typeList: {
-        type: "餐饮服务",
+        type: '餐饮服务',
         pageSize: 20,
         pageIndex: 1,
         cpoint: null,
       },
       // AMap的实例
-      mapObject: null
+      mapObject: null,
+      nearbyList: {
+        food: [],
+        scenery: [],
+        shop: [],
+      },
+      clientHeight: null,
+      el: null,
+      isbottom: false,
     };
   },
   methods: {
-    onSearch() {},
+    onSearch() {
+      this.$router.push({path: `/institution/search/${this.searchData}`});
+    },
     onCancel() {
-      this.searchData = "";
+      this.searchData = '';
     },
     textScroll(x, y, text) {
-      let eleId = document.getElementById("scrollItem");
-      eleId.style.left = x + "px";
-      eleId.style.top = x + "px";
+      let eleId = document.getElementById('scrollItem');
+      eleId.style.left = x + 'px';
+      eleId.style.top = x + 'px';
       eleId.innerHTML = text;
     },
     handleClickType(index) {
-      switch (index) {
+      for(const key in this.nearbyList) {
+        this.nearbyList[key] = [];
+      }
+      switch(index) {
         case 1:
+          this.typeList.type = '餐饮服务'
           break;
         case 2:
+          this.typeList.type = '风景名胜'
           break;
         case 3:
+          this.typeList.type = '购物服务'
           break;
+      }
+      this.handleAround(this);
+    },
+    handleScroll() {
+      let a = this.el.getBoundingClientRect().bottom;
+      a = Math.ceil(a);
+      if (a == this.clientHeight) {
+        this.isbottom = true;
+        console.log('到底了');
+        this.typeList.pageIndex += 1;
+        this.handleAround(this, true);
       }
     },
     mapInit() {
       let that = this;
       MapLoader().then(
-        (AMap) => {
-          console.log("地图加载成功");
+        AMap => {
+          console.log('地图加载成功');
           this.handleCurrPos(that);
         },
-        (e) => {
-          console.log("地图加载失败", e);
+        e => {
+          console.log('地图加载失败', e);
         }
       );
     },
     handleCurrPos(that) {
       if (!that.mapObject) {
-          that.mapObject = new AMap.Map("container");
+        that.mapObject = new AMap.Map('container');
       }
-      that.mapObject.plugin("AMap.Geolocation", function() {
+      that.mapObject.plugin('AMap.Geolocation', function() {
         let geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,
-            timeout: 1000,
-            buttonPosition:'RB',
-            buttonOffset: new AMap.Pixel(10, 20),
-            zoomToAccuracy: true,  
+          enableHighAccuracy: true,
+          timeout: 1000,
+          buttonPosition: 'RB',
+          buttonOffset: new AMap.Pixel(10, 20),
+          zoomToAccuracy: true,
         });
-        geolocation.getCurrentPosition(function(status,result){
-            if(status=='complete'){
-                const arr = [result.position.lng, result.position.lat];
-                console.log(arr);
-                that.typeList.cpoint = arr;
-            }else{
-                Toast.error("定位失败，默认定位为天安门，或更换浏览器");
-                that.typeList.cpoint = [116.405467, 39.907761]; 
+        geolocation.getCurrentPosition(function(status, result) {
+          if (status == 'complete') {
+            const arr = [result.position.lng, result.position.lat];
+            that.typeList.cpoint = arr;
+            // 获得我的经纬度后，再调用
+            that.handleAround(that);
+          } else {
+            Toast.error('定位失败，默认定位为天安门，或更换浏览器');
+            that.typeList.cpoint = [116.405467, 39.907761];
+          }
+        });
+      });      
+    },
+    handleAround(that, isbottom) {
+      AMap.service(["AMap.PlaceSearch"], function() {
+        //构造地点查询类
+        let placeSearch = new AMap.PlaceSearch({ 
+          type: that.typeList.type, // 兴趣点类别
+          pageSize: that.typeList.pageSize, // 单页显示结果条数
+          pageIndex: that.typeList.pageIndex, // 页码
+          city: "010", // 兴趣点城市
+          citylimit: true,  //是否强制限制在设置的城市内搜索
+        });
+        placeSearch.searchNearBy('', that.typeList.cpoint, 2000, function(status, result) {
+          if (status === "complete") {
+            switch(that.typeList.type) {
+            case "餐饮服务":
+              that.nearbyList.food = that.nearbyList.food.concat(result.poiList.pois);
+              console.log(status, result);
+              break;
+            case "风景名胜":
+              that.nearbyList.scenery = that.nearbyList.scenery.concat(result.poiList.pois);
+              break;
+            case "购物服务":
+              that.nearbyList.shop = that.nearbyList.shop.concat(result.poiList.pois);
+              break;
             }
+          } else {
+            Toast.error("加载失败...");
+          }
+          // 按需加载
+          if(isbottom) that.isbottom = false;
         });
       });
-    },
+    }
   },
   mounted() {
-    let text = "欢迎光临，顺义大明白App~~~";
+    let text = '欢迎光临，顺义大明白App~~~';
     this.textScroll(5, 0, text);
-
+    // 初始化高德地图
     this.mapInit();
+    // 处理到底按需加载
+    this.clientHeight = document.documentElement.clientHeight;
+    this.$nextTick(() => {
+      this.el = this.$refs.my_pull;
+      window.addEventListener('scroll', this.handleScroll)
+    })
   },
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .institution {
   #scroll {
     width: 100%;
@@ -281,6 +335,18 @@ export default {
     div {
       margin-top: 10px;
     }
+  }
+  .isbottom {
+    width: 100vw;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #search {
+    width: 80vw;
+    height: 100vh;
+    margin: 0 auto;
   }
 }
 </style>

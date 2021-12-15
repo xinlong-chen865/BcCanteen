@@ -9,6 +9,7 @@
     <div id="container"></div>
   </div>
 </template>
+
 <script>
 import Vue from "vue";
 import MapLoader from "@/assets/js/AMap.js";

@@ -19,6 +19,7 @@ import canteenPosition from "@/views/canteen/position";
 
 //设施模块
 import Institution from "@/views/institution";
+import Search from "@/views/institution/search";
 
 Vue.use(VueRouter);
 
@@ -94,9 +95,14 @@ const routes = [
   },
   //热点设施
   {
-	path: "/institution",
-	name: "institution",
-	component: Institution
+    path: "/institution",
+    name: "institution",
+    component: Institution
+  },
+  {
+    path: "/institution/search/:name",
+    name: "search",
+    component: Search
   }
 ];
 
