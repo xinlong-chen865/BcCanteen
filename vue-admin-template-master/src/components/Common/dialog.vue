@@ -60,6 +60,17 @@
           disabled
         />
       </el-form-item>
+
+      <!-- 菜品管理 -->
+      <el-form-item v-if="form.hasOwnProperty('goods_name')" label="菜品名称">
+        <el-input v-model="form.goods_name" />
+      </el-form-item>
+      <el-form-item v-if="form.hasOwnProperty('price')" label="菜品单价">
+        <el-input-number v-model="form.price" />
+      </el-form-item>
+      <el-form-item v-if="form.hasOwnProperty('goods_total')" label="菜品销量">
+        <el-input-number v-model="form.goods_total" />
+      </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="handleClose">取 消</el-button>

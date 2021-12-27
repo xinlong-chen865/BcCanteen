@@ -213,4 +213,189 @@ router.post('/audit-newuser/update',async function(req, res, next) {
     });
 });
 
+/* 购买统计查看 */
+router.post('/purchase-statistics',async function(req, res, next) {
+    const filterData = req.body.filterData
+    let sqlStr, result
+    const merge_obj = {
+        bus_name: [],
+        bus_sales: []
+    }
+    const dict = {
+        1: [0, 100],
+        2: [100, 300],
+        3: [300, 800],
+        4: [800, 100000],
+    }
+
+    if (filterData.floor_id !== 0 && filterData.sales === 0 && filterData.category_id === 0) {
+        sqlStr = `select id, bus_name, bus_sales from can_business where floor_id = ? order by bus_sales desc limit 10`;
+        result = await sqlQuery(sqlStr, [filterData.floor_id]);
+    } else if (filterData.category_id !== 0 && filterData.sales === 0 && filterData.floor_id === 0) {
+        sqlStr = `select id, bus_name, bus_sales from can_business where category_id = ? order by bus_sales desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.category_id]);
+    } else if (filterData.sales !== 0 && filterData.category_id === 0 && filterData.floor_id === 0) {
+        sqlStr = `select * from can_business where bus_sales between ? and ? order by bus_sales desc limit 10`
+        result = await sqlQuery(sqlStr, [dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else if (filterData.sales !== 0 && filterData.category_id !== 0 && filterData.floor_id === 0) {
+        sqlStr = `select * from can_business where category_id = ? AND bus_sales between ? and ? order by bus_sales desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.category_id, dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else if (filterData.sales !== 0 && filterData.category_id === 0 && filterData.floor_id !== 0) {
+        sqlStr = `select * from can_business where floor_id = ? AND bus_sales between ? and ? order by bus_sales desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.floor_id, dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else if (filterData.sales === 0 && filterData.category_id !== 0 && filterData.floor_id !== 0) {
+        sqlStr = `select * from can_business where floor_id = ? AND category_id = ? order by bus_sales desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.floor_id, filterData.category_id]);
+    } else if (filterData.sales !== 0 && filterData.category_id !== 0 && filterData.floor_id !== 0) {
+        sqlStr = `select * from can_business where floor_id = ? AND category_id = ? AND bus_sales between ? and ? order by bus_sales desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.floor_id, filterData.category_id, dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else {
+        sqlStr = 'select id, bus_name, bus_sales from can_business order by bus_sales desc limit 10';
+        result = await sqlQuery(sqlStr);
+    }
+
+    for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        merge_obj.bus_name.push(element.bus_name);
+        merge_obj.bus_sales.push(element.bus_sales);
+    }
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: result,
+        merge_obj
+    });
+});
+
+/* 购买统计查看 */
+router.post('/traffic-analysis',async function(req, res, next) {
+    const filterData = req.body.filterData
+    let sqlStr, result
+    const merge_obj = {
+        bus_name: [],
+        bus_pageview: []
+    }
+    const dict = {
+        1: [0, 2000],
+        2: [2000, 8000],
+        3: [8000, 15000],
+        4: [15000, 100000],
+    }
+
+    if (filterData.floor_id !== 0 && filterData.sales === 0 && filterData.category_id === 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where floor_id = ? order by bus_pageview desc limit 10`;
+        result = await sqlQuery(sqlStr, [filterData.floor_id]);
+    } else if (filterData.category_id !== 0 && filterData.sales === 0 && filterData.floor_id === 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where category_id = ? order by bus_pageview desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.category_id]);
+    } else if (filterData.sales !== 0 && filterData.category_id === 0 && filterData.floor_id === 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where bus_pageview between ? and ? order by bus_pageview desc limit 10`
+        result = await sqlQuery(sqlStr, [dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else if (filterData.sales !== 0 && filterData.category_id !== 0 && filterData.floor_id === 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where category_id = ? AND bus_pageview between ? and ? order by bus_pageview desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.category_id, dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else if (filterData.sales !== 0 && filterData.category_id === 0 && filterData.floor_id !== 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where floor_id = ? AND bus_pageview between ? and ? order by bus_pageview desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.floor_id, dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else if (filterData.sales === 0 && filterData.category_id !== 0 && filterData.floor_id !== 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where floor_id = ? AND category_id = ? order by bus_pageview desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.floor_id, filterData.category_id]);
+    } else if (filterData.sales !== 0 && filterData.category_id !== 0 && filterData.floor_id !== 0) {
+        sqlStr = `select id, bus_name, bus_pageview from can_business where floor_id = ? AND category_id = ? AND bus_pageview between ? and ? order by bus_pageview desc limit 10`
+        result = await sqlQuery(sqlStr, [filterData.floor_id, filterData.category_id, dict[filterData.sales][0], dict[filterData.sales][1]]);
+    } else {
+        sqlStr = 'select id, bus_name, bus_pageview from can_business order by bus_pageview desc limit 10';
+        result = await sqlQuery(sqlStr);
+    }
+
+    for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        merge_obj.bus_name.push(element.bus_name);
+        merge_obj.bus_pageview.push(element.bus_pageview);
+    }
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: result,
+        merge_obj
+    });
+});
+
+/* 菜品管理 */
+router.get('/dish-management',async function(req, res, next) {
+    const searchData = req.query.searchData
+    let sqlStr, business_result
+
+    if (searchData) {
+        sqlStr = `select id, bus_name, bus_phone, bus_people from can_business where bus_name like "%${searchData}%"`;
+        business_result = await sqlQuery(sqlStr);
+    } else {
+        // sqlStr = 'select cg.id, bus_id, goods_name, price, goods_img, goods_total, cb.bus_name from can_goods cg join can_business cb on cg.bus_id = cb.id ';
+        sqlStr = 'select id, bus_name, bus_phone, bus_people  from can_business'
+        business_result = await sqlQuery(sqlStr);
+    }
+
+    const goods_list = [];
+
+    for (let index = 0; index < business_result.length; index++) {
+        const { id: bus_id, bus_name, bus_phone, bus_people  } = business_result[index];
+        const sqlStr2 = 'select id, goods_name, price, goods_img, goods_total from can_goods where bus_id = ?'
+        const goods_result = await sqlQuery(sqlStr2, [bus_id]);
+        goods_list.push({
+            bus_id,
+            bus_name,
+            bus_phone, 
+            bus_people, 
+            childList: goods_result
+        })
+    }
+
+
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: goods_list
+    });
+});
+/* 菜品管理修改 */
+router.post('/dish-management/update',async function(req, res, next) {
+    const id = req.body.id
+    const goods_name = req.body.goods_name
+    const price = req.body.price
+    const goods_total = req.body.goods_total
+    let sqlStr = "UPDATE can_goods SET goods_name = ?, price = ?, goods_total = ? WHERE id = ?";
+    await sqlQuery(sqlStr, [goods_name, price, goods_total, id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '修改成功'
+        }
+    });
+});
+
+// router.get('/handler-goods',async function(req, res, next) {
+//     const searchData = req.query.searchData
+//     function getRandomNumberByRange(start, end) { return Math.floor(Math.random() * (end - start) + start) }
+//     let sqlStr
+
+//     for (let index = 0; index < 934; index++) {
+//         const count = getRandomNumberByRange(80, 2000)
+//         sqlStr = "UPDATE can_goods SET goods_total = ? WHERE id = ?";
+//         result = await sqlQuery(sqlStr, [count, index]);
+//     }
+
+
+// 	res.append('Access-Control-Allow-Origin','*')
+// 	res.append('Access-Control-Allow-Content-Type','*')
+// 	res.json({
+//         state: 200
+//     });
+// });
+
 module.exports = router;

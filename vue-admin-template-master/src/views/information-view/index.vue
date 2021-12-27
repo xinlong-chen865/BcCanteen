@@ -154,6 +154,7 @@ export default {
     }
   },
   created() {
+    if (this.$route.query.bus_name) this.searchData = this.$route.query.bus_name
     this.fetchData()
   },
   methods: {
