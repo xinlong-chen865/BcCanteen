@@ -6,7 +6,7 @@ var sqlQuery = require('../lcMysql.js');
 router.post('/login',async function(req, res, next) {
   let username = req.body.username;
   let password = req.body.password;
-  let sqlStr = 'select * from user where username = ? and password = ?'
+  let sqlStr = 'select * from user where stu_id = ? and password = ?'
   let result = await sqlQuery(sqlStr,[username, password]);
   // 不发密码
   delete result[0].password;

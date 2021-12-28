@@ -42,6 +42,7 @@ export const constantRoutes = [
     redirect: '/order-management/order-application',
     name: 'order-management',
     meta: { title: '订单管理', icon: 'el-icon-s-help' },
+    auth: ['admin'],
     children: [
       {
         path: 'order-application',
@@ -63,6 +64,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/forecast-view/index',
     name: 'forecast-view',
+    auth: ['admin'],
     meta: { title: '预测查看', icon: 'el-icon-view' },
     children: [
       {
@@ -79,6 +81,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/statistical-analysis/revenue-view',
     name: 'statistical-analysis',
+    auth: ['admin'],
     meta: { title: '统计分析', icon: 'el-icon-edit' },
     children: [
       {
@@ -101,6 +104,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/merchant-management/dish-management',
     name: 'merchant-management',
+    auth: ['superadmin'],
     meta: { title: '商家查看', icon: 'el-icon-s-help' },
     children: [
       {
@@ -117,6 +121,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/system-management/user-management',
     name: 'system-management',
+    auth: ['superadmin'],
     meta: { title: '系统管理', icon: 'el-icon-setting' },
     children: [
       {
@@ -138,6 +143,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/store-information-management/audit-newuser',
     name: 'store-information-management',
+    auth: ['superadmin'],
     meta: { title: '店铺信息管理', icon: 'el-icon-bell' },
     children: [
       {
@@ -164,6 +170,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/daily-access/purchase-statistics',
     name: 'daily-access',
+    auth: ['superadmin'],
     meta: { title: '每日访问查看', icon: 'el-icon-mobile-phone' },
     children: [
       {

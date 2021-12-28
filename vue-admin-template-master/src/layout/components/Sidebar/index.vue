@@ -28,10 +28,23 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'status'
     ]),
     routes() {
-      return this.$router.options.routes
+      const auth_str = this.status === 2 ? 'superadmin' : 'admin'
+      const new_routes = []
+      this.$router.options.routes.forEach(route => {
+        if (!route.auth) {
+          new_routes.push(route)
+          return
+        }
+        const is = route.auth.some(val => val === auth_str)
+        if (is) {
+          new_routes.push(route)
+        }
+      })
+      return new_routes
     },
     activeMenu() {
       const route = this.$route
