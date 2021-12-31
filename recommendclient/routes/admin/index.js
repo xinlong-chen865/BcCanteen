@@ -379,23 +379,5 @@ router.post('/dish-management/update',async function(req, res, next) {
     });
 });
 
-// router.get('/handler-goods',async function(req, res, next) {
-//     const searchData = req.query.searchData
-//     function getRandomNumberByRange(start, end) { return Math.floor(Math.random() * (end - start) + start) }
-//     let sqlStr
-
-//     for (let index = 0; index < 934; index++) {
-//         const count = getRandomNumberByRange(80, 2000)
-//         sqlStr = "UPDATE can_goods SET goods_total = ? WHERE id = ?";
-//         result = await sqlQuery(sqlStr, [count, index]);
-//     }
-
-
-// 	res.append('Access-Control-Allow-Origin','*')
-// 	res.append('Access-Control-Allow-Content-Type','*')
-// 	res.json({
-//         state: 200
-//     });
-// });
 
 module.exports = router;

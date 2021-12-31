@@ -37,7 +37,7 @@ router.post('/logout', function(req, res, next) {
 /* 获取用户信息 */
 router.get('/info',async function(req, res, next) {
   const token = req.query.token;
-  let sqlStr = 'select username, header_img, status from user where stu_id = ?';
+  let sqlStr = 'select username, header_img, status from user where id = ?';
   let result = await sqlQuery(sqlStr, [token]);
   res.append('Access-Control-Allow-Origin','*')
   res.append('Access-Control-Allow-Content-Type','*')

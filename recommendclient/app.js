@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var canteenMainRouter = require('./routes/canteen/main');
 var payRouter = require('./routes/alipay/alipay');
 var adminRouter = require('./routes/admin/index');
+var businessAdminRouter = require('./routes/admin/business_admin');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/users', usersRouter);
 app.use('/canteen', canteenMainRouter);
 app.use('/pay', payRouter);
 app.use('/admin', adminRouter);
+app.use('/business_admin', businessAdminRouter);
 
 
 

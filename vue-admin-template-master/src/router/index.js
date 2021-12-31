@@ -47,13 +47,13 @@ export const constantRoutes = [
       {
         path: 'order-application',
         name: 'order-application',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/order-application/index'),
         meta: { title: '订单申请查看', icon: 'table' }
       },
       {
         path: 'order-desc',
         name: 'order-desc',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/order-desc/index'),
         meta: { title: '订单详情查看', icon: 'tree' }
       }
     ]

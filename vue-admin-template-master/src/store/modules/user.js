@@ -41,9 +41,9 @@ const actions = {
         const { userInfo } = response
         commit('SET_NAME', userInfo.username)
         commit('SET_AVATAR', userInfo.header_img)
-        commit('SET_TOKEN', userInfo.stu_id)
+        commit('SET_TOKEN', userInfo.id)
         commit('SET_STATUS', userInfo.status)
-        setToken(userInfo.stu_id)
+        setToken(userInfo.id)
         storage.setLocalStorage('USER_STATUS', userInfo.status)
         resolve()
       }).catch(error => {
