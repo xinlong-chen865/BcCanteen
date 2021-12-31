@@ -5,11 +5,9 @@ var sqlQuery = require('../../lcMysql.js');
 /* 订单管理 */
 router.post('/order-application',async function(req, res, next) {
     const userId = req.body.userId;
-    console.log(userId);
     let sqlStr, result;
     sqlStr = 'select co.id, user_id, co.goods_id, order_sum, order_price, createTime, cg.goods_name, cg.goods_img, u.stu_id, u.username, u.header_img, u.sex from can_order co join can_goods cg on co.goods_id = cg.id join user u on co.user_id = u.id where order_status = 2 and business_id = ?';
     result = await sqlQuery(sqlStr, [userId]);
-    console.log(result);
 
     const orderList = [];
     for (const item of result) {
@@ -67,11 +65,9 @@ router.post('/order-application/update',async function(req, res, next) {
 
 router.post('/order-desc',async function(req, res, next) {
     const userId = req.body.userId;
-    console.log(userId);
     let sqlStr, result;
     sqlStr = 'select co.id, user_id, co.goods_id, order_sum, order_price, createTime, cg.goods_name, cg.goods_img, u.stu_id, u.username, u.header_img, u.sex from can_order co join can_goods cg on co.goods_id = cg.id join user u on co.user_id = u.id where order_status = 3 and business_id = ?';
     result = await sqlQuery(sqlStr, [userId]);
-    console.log(result);
 
     const orderList = [];
     for (const item of result) {

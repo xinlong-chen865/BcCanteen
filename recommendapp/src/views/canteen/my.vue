@@ -52,6 +52,7 @@
 	import tabNav from '@/components/tabNav'
 	import { Icon } from 'vant';
 	import { cloneDeep } from "lodash"
+	import socket from '@/utils/socket'
 
 	const FUNCTION_OBJECT = {
 		COLLECTION: "COLLECTION",
@@ -88,10 +89,15 @@
 				}
 			},
 			exitEvent(){
-				localStorage.removeItem('userInfo');
-				this.$router.push({
-					path: '/user/login'
-				})
+				// WebSocket断开连接
+      			socket.disconnect()
+
+				setTimeout(() => {
+					localStorage.removeItem('userInfo');
+					this.$router.push({
+						path: '/user/login'
+					})
+				}, 0)
 			},
 			// 功能跳转
 			handleClickSkip(key) {

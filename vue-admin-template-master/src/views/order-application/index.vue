@@ -99,6 +99,7 @@
 import request from '@/utils/request'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import socket from '@/utils/socket'
 
 export default {
   filters: {
@@ -120,6 +121,10 @@ export default {
   },
   created() {
     this.fetchData()
+    this.connectSocket()
+  },
+  mounted() {
+    this.handleWebSocket()
   },
   methods: {
     fetchData() {
@@ -156,6 +161,12 @@ export default {
         })
         this.fetchData()
       }
+    },
+    connectSocket() {
+      socket.emit('login', this.token)
+    },
+    handleWebSocket() {
+
     }
   }
 }

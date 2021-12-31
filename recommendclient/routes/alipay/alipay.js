@@ -58,7 +58,6 @@ router.get('/paying',async function(req, res, next) {
 // 把未付款改为付款
 router.get('/confirm',async function(req, res, next) {
     const id = req.query.id;
-    console.log(id);
     const sqlStr = "update can_order set order_status = ? where id = ?";
     await sqlQuery(sqlStr, [2, id]);
 });

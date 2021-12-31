@@ -7,6 +7,8 @@
 <script>
 import { PayingConfirm } from './api/goods';
 import { Toast } from 'vant';
+import socket from '@/utils/socket'
+
 export default {
   mounted() {
     this.watchUrlParams();
@@ -18,8 +20,10 @@ export default {
         this.$router.currentRoute.query.method === 'alipay.trade.page.pay.return' &&
         this.$router.currentRoute.query.out_trade_no
       ) {
+        const id = this.$router.currentRoute.query.out_trade_no;
+        socket.emit('paycomplete', id);
         const result = await PayingConfirm({
-          id: this.$router.currentRoute.query.out_trade_no,
+          id
         });
         if (result.code === 200) {
           Toast.success(result.message);

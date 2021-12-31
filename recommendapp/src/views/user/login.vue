@@ -42,6 +42,7 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue';
+import socket from '@/utils/socket'
 
 import { NavBar } from 'vant';
 import { Toast } from 'vant';
@@ -62,7 +63,7 @@ const token = '123456';
 		onClickLeft() {
 			this.$router.push({ path:'/canteen/main'});
 		},
-		async login(){
+		async login() {
 			this.loading = true;
 			//前端验证
 			if(this.username === ''){
@@ -85,6 +86,8 @@ const token = '123456';
 			})
 			if(res.data.state == 200){
 				this.loading = false;
+				// 连接WebSocket
+				socket.emit('login', res.data.userInfo.id)
 				//登陆成功
 				Toast.success(res.data.content);
 				//登陆成功后存储到本地

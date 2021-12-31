@@ -124,7 +124,6 @@ router.post('/auth/update',async function(req, res, next) {
 /* 商家信息查看 */
 router.get('/information-view',async function(req, res, next) {
     const searchData = req.query.searchData
-    console.log(searchData);
     let sqlStr, result
     if (searchData) {
         sqlStr = `select * from can_business where bus_name like "%${searchData}%"`;
