@@ -59,6 +59,18 @@
         prop="stu_id"
       />
       <el-table-column
+        label="买家联系电话"
+        prop="phone"
+      />
+      <el-table-column
+        label="买家收货地址"
+        prop="address"
+      />
+      <el-table-column
+        label="订单总额"
+        prop="order_price"
+      />
+      <el-table-column
         label="订单创建时间"
       >
         <template slot-scope="scope">

@@ -33,9 +33,9 @@ function getSocket(server){
             let res2 = await sqlQuery(sqlStr2, [res1[0]['business_id'], 'true'])
             if (res2.length > 0) {
                 //如果此人在线，那么直接发送消息；
-                const toid = result[0].socket_id;
+                const toid = res2[0].socket_id;
                 console.log('toid', toid)
-                socket.to(toid).emit("accept", result[0].username)
+                socket.to(toid).emit("accept", res2[0].username)
             } else {
                 console.log('error', '商家不在线，不需要提醒了');
             }

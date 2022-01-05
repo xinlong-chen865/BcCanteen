@@ -97,7 +97,7 @@
 		},
 		created(){
 			this.userId && this.fetchData(0);
-			this.userId && this.fetchData(1);
+			this.userId && this.fetchData(2);
 		},
 		methods:{
 			//获取订单
@@ -105,7 +105,7 @@
 				if(state == 0){
 					let {data} = await getOrder({state, userId: this.userId});
 					this.unreadList = data;
-				}else{
+				} else {
 					let {data} = await getOrder({state, userId: this.userId});
 					this.readList = data
 				}

@@ -59,6 +59,10 @@
         prop="stu_id"
       />
       <el-table-column
+        label="买家收货地址"
+        prop="address"
+      />
+      <el-table-column
         label="订单创建时间"
       >
         <template slot-scope="scope">
@@ -166,7 +170,15 @@ export default {
       socket.emit('login', this.token)
     },
     handleWebSocket() {
-
+      socket.on('accept', (msg) => {
+        console.log('--------接收的数据')
+        console.log(msg)
+        this.$message({
+          message: `${msg}您好，您有新订单`,
+          type: 'success'
+        })
+        this.fetchData()
+      })
     }
   }
 }

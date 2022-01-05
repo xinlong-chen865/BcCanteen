@@ -141,4 +141,37 @@ router.get('/getOrder',async function(req, res, next) {
 	
 });
 
+/* 添加收货地址 */
+router.get('/info',async function(req, res, next) {
+    const id = req.query.id
+    const sqlStr = "select phone, address from user where id = ?";
+    let result = await sqlQuery(sqlStr, [id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            phone: result[0].phone,
+			address: result[0].address
+        }
+    });
+});
+/* 更新收货地址 */
+router.post('/info/update',async function(req, res, next) {
+    const id = req.body.id
+    const phone = req.body.phone
+	const address = req.body.address
+    let sqlStr = "UPDATE user SET phone = ?, address = ? WHERE id = ?";
+    await sqlQuery(sqlStr, [phone, address, id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '修改成功'
+        }
+    });
+});
+
 module.exports = router;

@@ -99,6 +99,7 @@ import {
   GoodsLists,
   PayingItem,
 } from "../../api/goods";
+import { GetInfo } from '@/api/info'
 import serialNumber from "@/assets/util/serialNumber";
 import { NavBar } from "vant";
 import { Icon } from "vant";
@@ -198,7 +199,17 @@ export default {
       this.showCart = !this.showCart;
     },
     //购买事件
-    handleToPay() {
+    async handleToPay() {
+      // 购买之前，先检验是否填写了收货地址
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const { data } = await GetInfo({ id: userInfo.id })
+      if (!data.data.phone && !data.data.address) {
+        Toast.fail('请填写收货地址')
+        this.$router.push({
+          path: `/canteen/info?redirect=${this.$route.path}`
+        });
+        return;
+      }
       //把购物车里面的消息 发给后端
       //并且跳转到支付页面
       let payId = serialNumber.serialNum;

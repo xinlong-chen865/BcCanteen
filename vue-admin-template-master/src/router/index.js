@@ -87,7 +87,7 @@ export const constantRoutes = [
       {
         path: 'revenue-view',
         name: 'revenue-view',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/revenue-view/index'),
         meta: { title: '收入查看', icon: 'table' }
       },
       {

@@ -16,6 +16,7 @@ import canteenCategoryList from "@/views/canteen/categoryList";
 import canteenGoods from "@/views/canteen/goods";
 import canteenPay from "@/views/canteen/pay";
 import canteenPosition from "@/views/canteen/position";
+import canteenInfo from "@/views/canteen/info";
 
 //设施模块
 import Institution from "@/views/institution";
@@ -66,6 +67,12 @@ const routes = [
     path: "/canteen/my",
     name: "canteenMy",
     component: canteenMy,
+  },
+  {
+    path: "/canteen/info",
+    name: "canteenInfo",
+    component: canteenInfo,
+    meta: { requiresAuth: true },
   },
   {
     props: true,
