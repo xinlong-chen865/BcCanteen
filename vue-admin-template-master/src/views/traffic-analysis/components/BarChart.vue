@@ -67,7 +67,7 @@ export default {
       this.chart.setOption({
         // color: ['#3398DB'],
         title: { // 标题
-          text: '食堂商家的月销量',
+          text: '食堂商家的访问量',
           left: 'center'
         },
         tooltip: { // 提示框
@@ -98,7 +98,7 @@ export default {
         ],
         series: [
           {
-            name: '月销量',
+            name: '访问量',
             type: 'bar', // 柱状图
             barWidth: '60%', // 每个柱子宽度
             data: this.seriesData

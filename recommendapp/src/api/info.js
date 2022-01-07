@@ -14,4 +14,20 @@ export function UpdateInfo(data) {
       method: 'post',
       data
     })
-  }
+}
+
+export function JoinBusiness(data) {
+  return request({
+    url: '/canteen/join',
+    method: 'post',
+    data
+  })
+}
+
+export function ConfirmJoinBusiness(data) {
+  return request({
+    url: '/canteen/join/confirm',
+    method: 'post',
+    data
+  })
+}

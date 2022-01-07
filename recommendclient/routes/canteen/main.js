@@ -174,4 +174,34 @@ router.post('/info/update',async function(req, res, next) {
     });
 });
 
+/* 成为商家 */
+router.post('/join',async function(req, res, next) {
+    const id = req.body.id
+    let sqlStr = "UPDATE user SET status = 3 WHERE id = ?";
+    await sqlQuery(sqlStr, [id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '修改成功'
+        }
+    });
+});
+/* 查看申请状态 */
+router.post('/join/confirm',async function(req, res, next) {
+    const id = req.body.id
+    let sqlStr = "select status from user WHERE id = ?";
+    const result = await sqlQuery(sqlStr, [id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            status: result[0].status
+        }
+    });
+});
+
 module.exports = router;

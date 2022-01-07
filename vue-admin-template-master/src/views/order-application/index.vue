@@ -103,7 +103,6 @@
 import request from '@/utils/request'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-import socket from '@/utils/socket'
 
 export default {
   filters: {
@@ -115,7 +114,8 @@ export default {
   data() {
     return {
       tableData: [],
-      listLoading: true
+      listLoading: true,
+      timer: null
     }
   },
   computed: {
@@ -125,10 +125,9 @@ export default {
   },
   created() {
     this.fetchData()
-    this.connectSocket()
   },
-  mounted() {
-    this.handleWebSocket()
+  destroyed() {
+    clearTimeout(this.timer)
   },
   methods: {
     fetchData() {
@@ -136,6 +135,7 @@ export default {
       this.getList().then(response => {
         this.tableData = response.data
         this.listLoading = false
+        this.timer = setTimeout(this.fetchData, 10000)
       })
     },
     getList() {
@@ -165,20 +165,6 @@ export default {
         })
         this.fetchData()
       }
-    },
-    connectSocket() {
-      socket.emit('login', this.token)
-    },
-    handleWebSocket() {
-      socket.on('accept', (msg) => {
-        console.log('--------接收的数据')
-        console.log(msg)
-        this.$message({
-          message: `${msg}您好，您有新订单`,
-          type: 'success'
-        })
-        this.fetchData()
-      })
     }
   }
 }

@@ -19,7 +19,7 @@ const tools = new Tools()
 router.post('/order-application',async function(req, res, next) {
     const userId = req.body.userId;
     let sqlStr, result;
-    sqlStr = 'select co.id, user_id, co.goods_id, order_sum, order_price, createTime, cg.goods_name, cg.goods_img, u.stu_id, u.username, u.header_img, u.sex, u.address from can_order co join can_goods cg on co.goods_id = cg.id join user u on co.user_id = u.id where order_status = 2 and business_id = ?';
+    sqlStr = 'select co.id, user_id, co.goods_id, order_sum, order_price, createTime, cg.goods_name, cg.goods_img, u.stu_id, u.username, u.header_img, u.sex, u.address from can_order co join can_goods cg on co.goods_id = cg.id join user u on co.user_id = u.id where order_status = 2 and business_id = ? order by createTime desc';
     result = await sqlQuery(sqlStr, [userId]);
 
     const orderList = [];
