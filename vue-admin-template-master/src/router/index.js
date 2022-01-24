@@ -34,7 +34,23 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
+  // 食堂详情
+  {
+    path: '/canteen-desc',
+    component: Layout,
+    redirect: '/canteen-desc/index',
+    name: 'canteen-desc',
+    meta: { title: '食堂详情', icon: 'el-icon-s-platform' },
+    auth: ['admin'],
+    children: [
+      {
+        path: 'index',
+        name: 'canteen-desc',
+        component: () => import('@/views/canteen-desc/index'),
+        meta: { title: '食堂详情', icon: 'el-icon-s-platform' }
+      }
+    ]
+  },
   // 订单管理
   {
     path: '/order-management',

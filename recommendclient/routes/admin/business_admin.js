@@ -170,4 +170,73 @@ router.post('/revenue-view',async function(req, res, next) {
         data: chartObj
     });
 });
+
+/* 食堂详情 */
+router.get('/canteen-desc',async function(req, res, next) {
+    const id = req.query.id;
+    let sqlStr, result
+    sqlStr = 'select id, bus_id, goods_name, price, goods_img from can_goods where bus_id = ?';
+    result = await sqlQuery(sqlStr, [id]);
+
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: result
+    });
+});
+/* 食堂详情 新增 */
+router.post('/canteen-desc/add',async function(req, res, next) {
+    const bus_id = req.body.bus_id
+    const goods_name = req.body.goods_name
+    const price = req.body.price
+    const goods_img = 'https://img2.baidu.com/it/u=1320386730,3153153183&fm=26&fmt=auto&gp=0.jpg'
+
+    res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+
+    let sqlStr_insert = "INSERT INTO can_goods (bus_id, goods_name, price, goods_img) VALUES (?, ?, ?, ?);"
+    await sqlQuery(sqlStr_insert, [bus_id, goods_name, price, goods_img]);
+    res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '添加成功'
+        }
+    })
+
+});
+/* 食堂详情修改 */
+router.post('/canteen-desc/update',async function(req, res, next) {
+    const id = req.body.id
+    const goods_name = req.body.goods_name
+    const price = req.body.price
+    let sqlStr = "UPDATE can_goods SET goods_name = ?, price = ? WHERE id = ?";
+    await sqlQuery(sqlStr, [goods_name, price, id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '修改成功'
+        }
+    });
+});
+/* 食堂详情删除 */
+router.post('/canteen-desc/delete',async function(req, res, next) {
+    const id = req.body.id
+    let sqlStr = "DELETE FROM can_goods WHERE id = ?";
+    await sqlQuery(sqlStr, [id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '删除成功'
+        }
+    });
+});
+
 module.exports = router;

@@ -119,19 +119,44 @@
 					break;
 				}
 			},
-			join() {
-				Dialog.confirm({
-					title: '成为商家',
-					message: '欢迎加入北城食堂商家大家庭',
-				})
-				.then(async () => {
-					let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            		await JoinBusiness({ id: userInfo && userInfo.id })
-					Toast.success('申请成功，请等待审核...')
-				})
-				.catch(() => {
-					// on cancel
-				});
+			async join() {
+				const status = await this.getStatus()
+				// 审核态
+				if (status === 3) {
+					Dialog.alert({
+						title: '审核中',
+						message: '您已经提交申请，请等待审核',
+					})
+				} else if (status === 4) {
+					// 拒绝态
+					Dialog.confirm({
+						title: '审核失败',
+						message: '您的审核被驳回，如有需要，请重新申请',
+						confirmButtonText: '再次申请'
+					}).then(async () => {
+						let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+						await JoinBusiness({ id: userInfo && userInfo.id })
+						Toast.success('申请成功，请等待审核...')
+					})
+					.catch(() => {});
+				} else {
+					// 一次未申请
+					Dialog.confirm({
+						title: '成为商家',
+						message: '欢迎加入北城食堂商家大家庭',
+					}).then(async () => {
+						let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+						await JoinBusiness({ id: userInfo && userInfo.id })
+						Toast.success('申请成功，请等待审核...')
+					})
+					.catch(() => {});
+				}
+				
+			},
+			async getStatus() {
+				let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+				const { data } = await ConfirmJoinBusiness({ id: userInfo && userInfo.id });
+				return data.data.status
 			}
 		},
 		mounted(){
