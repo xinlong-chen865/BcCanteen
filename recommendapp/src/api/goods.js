@@ -47,3 +47,11 @@ export function PayingConfirm(params) {
     params
   })
 }
+
+export function InsertFootprint(data) {
+  return request({
+    url: '/business_admin/traffic-view/insert',
+    method: 'post',
+    data
+  })
+}

@@ -243,6 +243,7 @@ export default {
         }
       );
     },
+    // 获取我的经纬度
     handleCurrPos(that) {
       if (!that.mapObject) {
         that.mapObject = new AMap.Map('container');
@@ -256,18 +257,20 @@ export default {
           zoomToAccuracy: true,
         });
         geolocation.getCurrentPosition(function(status, result) {
+          console.log(status, result);
           if (status == 'complete') {
             const arr = [result.position.lng, result.position.lat];
             that.typeList.cpoint = arr;
-            // 获得我的经纬度后，再调用
-            that.handleAround(that);
           } else {
-            Toast.error('定位失败，默认定位为天安门，或更换浏览器');
+            Toast.fail('定位失败，默认定位为天安门，或更换浏览器');
             that.typeList.cpoint = [116.405467, 39.907761];
           }
+          // 获得我的经纬度后，再调用
+          that.handleAround(that);
         });
       });      
     },
+    // 获取我周围的设施
     handleAround(that, isbottom) {
       AMap.service(["AMap.PlaceSearch"], function() {
         //构造地点查询类

@@ -98,6 +98,7 @@ import {
   IdToBusiness,
   GoodsLists,
   PayingItem,
+  InsertFootprint,
 } from "../../api/goods";
 import { GetInfo } from '@/api/info'
 import serialNumber from "@/assets/util/serialNumber";
@@ -248,6 +249,10 @@ export default {
       let url = data.url;
       window.location.href = url;
     },
+    async insertFootprint() {
+      const user_id = JSON.parse(localStorage.getItem('userInfo')).id
+      await InsertFootprint({ bus_id: this.bid, user_id });
+    }
   },
   computed: {
     //收藏
@@ -301,6 +306,8 @@ export default {
 
     let result2 = await GoodsLists({ bus_id: this.bid });
     this.goodsList = result2.data;
+    // 曝光
+    this.insertFootprint();
   },
 };
 </script>

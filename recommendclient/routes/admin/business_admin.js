@@ -170,6 +170,24 @@ router.post('/revenue-view',async function(req, res, next) {
         data: chartObj
     });
 });
+/* 访问量查看(footprint) */
+router.post('/traffic-view', async function(req, res, next) {
+
+});
+/* 访问量查看(footprint) */
+router.post('/traffic-view/insert', async function(req, res, next) {
+    const user_id = req.body.user_id;
+    const bus_id = req.body.bus_id;
+    const insertStr = "INSERT INTO user_footprint (bus_id, user_id, createTime, count) VALUES (?, ?, ?, ?);"
+    await sqlQuery(insertStr, [bus_id, user_id, new Date().getTime(), 1]);
+    res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        message: '插入成功',
+    });
+});
+
 
 /* 食堂详情 */
 router.get('/canteen-desc',async function(req, res, next) {

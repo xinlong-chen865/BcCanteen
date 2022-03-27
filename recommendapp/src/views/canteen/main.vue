@@ -29,7 +29,10 @@
 		<van-grid :column-num="4">
 		  <van-grid-item  @click="chooseCategory(item.id)" v-for="(item, index) in canteen.categoryList" :key="index" :icon="require('@/assets/img/category/' + item.c_logo)" :text=item.c_name />
 		</van-grid>
-		
+		<div class="anime">
+			<LiveRecommendAnime></LiveRecommendAnime>
+			<div class="anime__title">大明白带你买</div>
+		</div>
 		<!-- 最新商家 -->
 		<van-divider content-position="left">最新商家</van-divider>
 		<van-grid :column-num="3">
@@ -70,7 +73,7 @@
 	import { NewBusinessList, HotBusinessList} from '../../api/main'
 	import {mapState, mapActions, mapMutations} from 'vuex'
 	
-	
+	import LiveRecommendAnime from '@/components/LiveRecommendAnime'
 	import { Swipe, SwipeItem } from 'vant';
 	import { Lazyload } from 'vant';
 	import { Search } from 'vant';
@@ -107,7 +110,8 @@
 			}
 		},
 		components:{
-			tabNav
+			tabNav,
+			LiveRecommendAnime
 		},
 		computed:{
 			//logo数据
@@ -210,6 +214,18 @@
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
+			}
+		}
+		.anime {
+			height: 40px;
+			display: flex;
+			align-items: center;
+			margin-left: 10px;
+			&__title {
+				font-size: 20px;
+				color: transparent;
+				-webkit-text-stroke: 1px #fe3666;
+				margin-left: 10px;
 			}
 		}
 	}

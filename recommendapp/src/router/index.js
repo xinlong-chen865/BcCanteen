@@ -27,8 +27,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    redirect: { name: 'canteenMain' }
   },
   //用户模块
   {
