@@ -71,6 +71,17 @@
       <el-form-item v-if="form.hasOwnProperty('goods_total')" label="菜品销量">
         <el-input-number v-model="form.goods_total" />
       </el-form-item>
+
+      <!-- 商家画像 -->
+      <el-form-item v-if="form.hasOwnProperty('vector_price')" label="价格实惠">
+        <el-rate v-model="form.vector_price" style="transform: translateY(10px);" />
+      </el-form-item>
+      <el-form-item v-if="form.hasOwnProperty('vector_category')" label="种类丰富">
+        <el-rate v-model="form.vector_category" style="transform: translateY(10px);" />
+      </el-form-item>
+      <el-form-item v-if="form.hasOwnProperty('vector_taste')" label="味道极佳">
+        <el-rate v-model="form.vector_taste" style="transform: translateY(10px);" />
+      </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="handleClose">取 消</el-button>

@@ -204,4 +204,164 @@ router.post('/join/confirm',async function(req, res, next) {
     });
 });
 
+/* 个性化推荐 */
+router.post('/recommend', async (req, res, next) => {
+	const userId = req.body.userId;
+    let sqlStr, result
+
+    sqlStr = 'select * from user_footprint where user_id = ?';
+    result = await sqlQuery(sqlStr, [userId]);
+
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+
+	if (result.length === 0) {
+		res.json({
+			state: 200,
+			data: [],
+		});
+	}
+
+	// 权重
+    let footprintList = [];
+
+    for (const item of result) {
+        const index = footprintList.findIndex(v => v.bus_id === item.bus_id);
+        if (index === -1) {
+            const obj = {
+                count: 1,
+                bus_id: item.bus_id,
+            }
+            footprintList.push(obj);
+        } else {
+            footprintList[index].count++
+        }
+    }
+	footprintList = footprintList.sort((a, b) => b.count - a.count);
+
+	let sqlStr2, result2;
+
+	sqlStr2 = 'select * from can_business';
+	result2 = await sqlQuery(sqlStr2);
+
+	for (const it of footprintList) {
+		const index = result2.findIndex(v => v.id == it.bus_id);
+		if (index !== -1) {
+			it['bus_address'] = result2[index]['bus_address'] || '';
+			it['bus_img'] = result2[index]['bus_img'] || '';
+			it['bus_name'] = result2[index]['bus_name'] || '';
+		}
+	}
+
+
+	res.json({
+        state: 200,
+        data: footprintList
+    });
+})
+
+/** 新用户进来的 爱好选择 */
+router.post('/newUserEnter', async (req, res) => {
+	const userId = req.body.userId;
+	let sqlStr, result
+
+    sqlStr = 'select hobby_category_id, hobby_vector_id from user where id = ?';
+    result = await sqlQuery(sqlStr, [userId]);
+
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	console.log(result[0]['hobby_category_id']);
+
+	// 选择过的
+	if (result[0]['hobby_category_id'] || result[0]['hobby_vector_id']) {
+		res.json({
+			state: 200,
+			data: {
+				isChoose: true,
+			},
+		});
+	} else {
+		res.json({
+			state: 200,
+			data: {
+				isChoose: false,
+			},
+		});
+	}
+	
+});
+/** 新用户进来的 提交向量化指数 */
+router.post('/newUserEnter/update', async (req, res) => {
+	const userId = req.body.userId;
+	const hobby_category_id = req.body.hobby_category_id;
+	const hobby_vector_id = req.body.hobby_vector_id;
+	let sqlStr
+
+    sqlStr = "UPDATE user SET hobby_category_id = ?, hobby_vector_id = ? WHERE id = ?";
+    await sqlQuery(sqlStr, [hobby_category_id, hobby_vector_id, userId]);
+	
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+		state: 200,
+		message: '成功',
+	});
+});
+
+router.post('/userProfile/recommend', async (req, res) => {
+	const userId = req.body.userId;
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	try {
+		const sqlStr = "SELECT hobby_category_id, hobby_vector_id FROM user WHERE id = ?";
+		const result = await sqlQuery(sqlStr, [userId]);
+		const { hobby_category_id, hobby_vector_id } = result[0];
+		const hobby_category_arr = hobby_category_id.split(',').map(it => Number(it));
+
+		const sqlStr2 = "SELECT * FROM can_business";
+		let businessList = await sqlQuery(sqlStr2);
+		businessList = businessList.sort((a, b) => Math.abs(a.bus_vector - hobby_vector_id) - Math.abs(b.bus_vector - hobby_vector_id));
+		
+		const sqlStr3 = 'SELECT * FROM can_goods WHERE bus_id = ? ORDER BY goods_total DESC LIMIT 0,3'
+		businessList = await Promise.all(
+			businessList.map(it => {
+			  return (async () => {
+				console.log(it);
+				let goodsList = await sqlQuery(sqlStr3, [it.id]);
+				return {
+					...it,
+					childList: goodsList.slice()
+				}
+			  })();
+			}),
+	 	);
+
+		const prev = [];
+		const next = [];
+		
+		businessList.forEach(element => {
+			// console.log(element.category_id, hobby_category_arr);
+			if (hobby_category_arr.includes(element.category_id)) {
+				prev.push(element);
+			} else {
+				next.push(element);
+			}
+		});
+		res.json({
+			state: 200,
+			data: [...prev, ...next],
+			message: '成功',
+		});
+	} catch (error) {
+		console.log(error);
+		res.json({
+			state: 501,
+			data: [],
+			message: '失败',
+		});
+	}
+	
+});
+
+
 module.exports = router;

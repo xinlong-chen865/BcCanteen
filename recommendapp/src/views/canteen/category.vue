@@ -19,7 +19,6 @@
 				 	<h3 class="busName" :title=item.bus_name>{{item.bus_name}}</h3>
 				 </template>
 			  </van-grid-item>
-			  
 		    </van-grid>
 			<div style="height:50px"></div>
 		  </template>

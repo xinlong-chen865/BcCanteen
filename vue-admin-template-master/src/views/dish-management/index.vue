@@ -71,6 +71,11 @@
         label="商家负责人手机号"
         prop="bus_phone"
       />
+      <el-table-column align="center" label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" @click="handleOperation(scope)">设置商家画像</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <alert-dialog
       :title="dialogData.title"
@@ -162,6 +167,13 @@ export default {
         data
       })
     },
+    collectUserProfile(data) {
+      return request({
+        url: '/admin/dish-management/userprofile',
+        method: 'post',
+        data
+      })
+    },
     handleSearch() {
       this.fetchData()
     },
@@ -176,8 +188,26 @@ export default {
         isUpdate: true
       }
     },
+    handleOperation({ row }) {
+      this.dialogData.title = '设置商家画像'
+      this.dialogData.visible = true
+      this.formData = {
+        id: row.bus_id,
+        vector_price: row.vector_price,
+        vector_category: row.vector_category,
+        vector_taste: row.vector_taste,
+        isUpdate: true
+      }
+    },
     async handleUpdate() {
-      const { data } = await this.updateList({ ...this.formData })
+      let data
+      if (this.formData.hasOwnProperty('vector_price') && this.formData.hasOwnProperty('vector_category') && this.formData.hasOwnProperty('vector_taste')) {
+        const { data: d } = await this.collectUserProfile({ ...this.formData })
+        data = d
+      } else {
+        const { data: d } = await this.updateList({ ...this.formData })
+        data = d
+      }
       if (data.code === 200) {
         this.$message({
           message: data.message,

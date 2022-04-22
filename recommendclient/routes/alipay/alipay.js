@@ -60,6 +60,10 @@ router.get('/confirm',async function(req, res, next) {
     const id = req.query.id;
     const sqlStr = "update can_order set order_status = ? where id = ?";
     await sqlQuery(sqlStr, [2, id]);
+    res.json({
+        state:200,
+        message: '支付成功',
+    });
 });
 
 

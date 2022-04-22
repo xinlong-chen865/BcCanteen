@@ -8,8 +8,32 @@ export function NewBusinessList() {
 }
 
 export function HotBusinessList() {
-    return request({
-      url: '/canteen/hotBusinessList',
-      method: 'get',
-    })
-  }
+  return request({
+    url: '/canteen/hotBusinessList',
+    method: 'get',
+  })
+}
+
+export function GetChooseUserProfile(data) {
+  return request({
+    url: '/canteen/newUserEnter',
+    method: 'post',
+    data,
+  })
+}
+
+export function UpdateChooseUserProfile(data) {
+  return request({
+    url: '/canteen/newUserEnter/update',
+    method: 'post',
+    data,
+  })
+}
+
+export function RecommendUserProfile(data) {
+  return request({
+    url: '/canteen/userProfile/recommend',
+    method: 'post',
+    data,
+  })
+}

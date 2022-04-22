@@ -8,6 +8,7 @@ import Register from "@/views/user/register";
 
 //食堂模块
 import canteenMain from "@/views/canteen/main";
+import canteenSelected from '@/views/canteen/selected';
 import canteenCategory from "@/views/canteen/category";
 import canteenOrder from "@/views/canteen/order";
 import canteenMy from "@/views/canteen/my";
@@ -17,6 +18,7 @@ import canteenGoods from "@/views/canteen/goods";
 import canteenPay from "@/views/canteen/pay";
 import canteenPosition from "@/views/canteen/position";
 import canteenInfo from "@/views/canteen/info";
+import canteenRecommend from "@/views/canteen/recommend";
 
 //设施模块
 import Institution from "@/views/institution";
@@ -46,6 +48,12 @@ const routes = [
     path: "/canteen/main",
     name: "canteenMain",
     component: canteenMain,
+  },
+  {
+    path: "/canteen/selected",
+    name: "canteenSelected",
+    component: canteenSelected,
+    meta: { requiresAuth: true }
   },
   {
     path: "/canteen/category",
@@ -84,6 +92,13 @@ const routes = [
     path: "/canteen/position",
     name: "canteenPosition",
     component: canteenPosition,
+  },
+  {
+    props: true,
+    path: "/canteen/recommend",
+    name: "canteenRecommend",
+    component: canteenRecommend,
+    meta: { requiresAuth: true },
   },
   //商品
   {

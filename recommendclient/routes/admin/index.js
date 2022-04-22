@@ -328,18 +328,18 @@ router.get('/dish-management',async function(req, res, next) {
     let sqlStr, business_result
 
     if (searchData) {
-        sqlStr = `select id, bus_name, bus_phone, bus_people from can_business where bus_name like "%${searchData}%"`;
+        sqlStr = `select id, bus_name, bus_phone, bus_people, vector_price, vector_category, vector_taste from can_business where bus_name like "%${searchData}%"`;
         business_result = await sqlQuery(sqlStr);
     } else {
         // sqlStr = 'select cg.id, bus_id, goods_name, price, goods_img, goods_total, cb.bus_name from can_goods cg join can_business cb on cg.bus_id = cb.id ';
-        sqlStr = 'select id, bus_name, bus_phone, bus_people  from can_business'
+        sqlStr = 'select id, bus_name, bus_phone, bus_people, vector_price, vector_category, vector_taste  from can_business'
         business_result = await sqlQuery(sqlStr);
     }
 
     const goods_list = [];
 
     for (let index = 0; index < business_result.length; index++) {
-        const { id: bus_id, bus_name, bus_phone, bus_people  } = business_result[index];
+        const { id: bus_id, bus_name, bus_phone, bus_people, vector_price, vector_category, vector_taste  } = business_result[index];
         const sqlStr2 = 'select id, goods_name, price, goods_img, goods_total from can_goods where bus_id = ?'
         const goods_result = await sqlQuery(sqlStr2, [bus_id]);
         goods_list.push({
@@ -347,6 +347,9 @@ router.get('/dish-management',async function(req, res, next) {
             bus_name,
             bus_phone, 
             bus_people, 
+            vector_price: vector_price || 0,
+            vector_category: vector_category || 0,
+            vector_taste: vector_taste || 0,
             childList: goods_result
         })
     }
@@ -359,6 +362,25 @@ router.get('/dish-management',async function(req, res, next) {
         data: goods_list
     });
 });
+router.post('/dish-management/userprofile',async function(req, res, next) {
+    const id = req.body.id
+    const vector_price = req.body.vector_price
+    const vector_category = req.body.vector_category
+    const vector_taste = req.body.vector_taste
+    const bus_vector = Number(vector_price) + Number(vector_category) * 5 + Number(vector_taste) * 10;
+    let sqlStr = "UPDATE can_business SET vector_price = ?, vector_category = ?, vector_taste = ?, bus_vector = ? WHERE id = ?";
+    await sqlQuery(sqlStr, [vector_price, vector_category, vector_taste, bus_vector, id]);
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: {
+            code: 200,
+            message: '修改成功'
+        }
+    });
+});
+
 /* 菜品管理修改 */
 router.post('/dish-management/update',async function(req, res, next) {
     const id = req.body.id

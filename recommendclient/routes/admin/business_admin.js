@@ -172,7 +172,49 @@ router.post('/revenue-view',async function(req, res, next) {
 });
 /* 访问量查看(footprint) */
 router.post('/traffic-view', async function(req, res, next) {
+    const bus_id = req.body.bus_id
+    const type = req.body.type
+    let sqlStr, result
 
+    sqlStr = 'select * from user_footprint where bus_id = ?';
+    result = await sqlQuery(sqlStr, [bus_id]);
+
+    const orderList = [];
+
+    for (const item of result) {
+        const index = orderList.findIndex(v => v.createTime === tools.handleTime(type, Number(item.createTime)));
+        if (index === -1) {
+            const obj = {
+                order_price: 1,
+                createTime: tools.handleTime(type, Number(item.createTime)),
+            }
+            orderList.push(obj);
+        } else {
+            orderList[index].order_price++
+        }
+    }
+    orderList.sort((a, b) => a.createTime - b.createTime)
+
+    const chartObj = {
+        time: [],
+        count: []
+    }
+    const unitObj = {
+        month: '月',
+        day: '号',
+        time: '点'
+    }
+    orderList.map(item => {
+        chartObj.time.push(item.createTime + unitObj[type])
+        chartObj.count.push(item.order_price)
+    })
+
+	res.append('Access-Control-Allow-Origin','*')
+	res.append('Access-Control-Allow-Content-Type','*')
+	res.json({
+        state: 200,
+        data: chartObj
+    });
 });
 /* 访问量查看(footprint) */
 router.post('/traffic-view/insert', async function(req, res, next) {

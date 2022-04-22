@@ -42,7 +42,7 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue';
-import socket from '@/utils/socket'
+import { mapActions } from 'vuex';
 
 import { NavBar } from 'vant';
 import { Toast } from 'vant';
@@ -60,6 +60,7 @@ const token = '123456';
       }
     },
     methods: {
+		...mapActions(['handleUserProfile']),
 		onClickLeft() {
 			this.$router.push({ path:'/canteen/main'});
 		},
@@ -86,16 +87,17 @@ const token = '123456';
 			})
 			if(res.data.state == 200){
 				this.loading = false;
-				// 连接WebSocket
-				socket.emit('login', res.data.userInfo.id)
 				//登陆成功
 				Toast.success(res.data.content);
 				//登陆成功后存储到本地
 				localStorage.setItem('userInfo',JSON.stringify(res.data.userInfo));
+				this.$store.commit('update', { userId: res.data.userInfo.id });
 				
 				const redirect = this.$route.query.redirect || "/canteen/main";
 				this.$router.push(redirect);
-				
+
+				// 触发新用户进来的弹窗
+				this.handleUserProfile();
 			}else if(res.data.state == 501){
 				this.loading = false;
 				Toast.fail(res.data.content);

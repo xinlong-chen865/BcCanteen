@@ -109,7 +109,7 @@ export const constantRoutes = [
       {
         path: 'traffic-view',
         name: 'traffic-view',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/traffic-view/index'),
         meta: { title: '用户访问量查看', icon: 'table' }
       }
     ]
